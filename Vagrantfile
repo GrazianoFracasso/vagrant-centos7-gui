@@ -31,10 +31,7 @@ SCRIPT
 
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  #config.vm.box = "ol7-latest"
-  #config.vm.box_url = "https://yum.oracle.com/boxes/oraclelinux/latest/ol7-latest.box"
   config.vm.box = "deo/centos7-gui"
-  #config.vm.box_url = "file://centos7_gui.box"
   config.vm.define NAME
   
   config.vm.box_check_update = false
@@ -43,19 +40,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider "virtualbox" do |v|
     v.memory = 4096
     v.name = NAME
-	#v.gui = true
+	v.gui = true
   end
 
   # VM hostname
   config.vm.hostname = NAME
   config.vm.network "private_network", ip: $ip
-  # Oracle port forwarding
-  #config.vm.network "forwarded_port", guest: 1521, host: 1521
-  #config.vm.network "forwarded_port", guest: 5500, host: 5500
-  #config.vm.synced_folder "/F/app", "/app", type: "virtualbox"
-  # Provision everything on the first run
 
-  #config.vm.provision "shell", inline: $upgrade
+  # Provision everything on the first run
 
   config.vm.provision "shell", path: "install_odi.sh"
 
