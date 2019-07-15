@@ -6,15 +6,13 @@ At the end of this configuration there will be 2 virtual machines running : 1) D
 
 ## Prerequisites
 
-1. Download Java and ODI Files
+1. Download Java Files from Oracle OTN ( jdk-8u171) and ODI Files 12.2.1.3.0 from Oracle eDelivery  ( V886451-01_1of2.zip,V886451-01_2of2.zip ) and copy them into this directory.
 
-From Oracle OTN or Oracle eDelivery download ODI 12.2.1.3.0 ( V886451-01_1of2.zip,V886451-01_2of2.zip ) and Java JDK  jdk-8u171 files and copy them into this directory.
-
-You should have these files:
+You should have these situation before starting:
 
 ![https://i.imgur.com/jzvw0LE.png](https://i.imgur.com/jzvw0LE.png)
 
-If you download ODI from OTB website just change ODI_PKG1 and ODI_PKG2 variables into install_odi.sh and install_odi_p2.sh files with the new filenames.
+If you download ODI from OTB website just change ODI_PKG1 and ODI_PKG2 variables into install_odi.sh and install_odi_p2.sh files with the correct filenames. Same trick if you choose a different version of java.
 
 2. Database
 
@@ -61,7 +59,6 @@ Create an environment file **odi.env.list**
         HOST_NAME=<Hostname where docker is running>
 
 
-​        
 Sample data should look similar to:
 
         CONNECTION_STRING=192.168.50.4:1521/PDB1
@@ -81,18 +78,38 @@ To start a vm with an ODI domain and agent, run the following command:
 
 Once the ODI container is created logs will be tailed and displayed to keep the container running.
 
-Now you can access the Agent at http://\< host name \>:20910/oraclediagent 
-         
+Now you can access the Agent at http://\< host name \>:20910/oraclediagent.
+
+Installation completed screenshot:
+
+![https://i.imgur.com/PtTosJp.jpg](https://i.imgur.com/PtTosJp.jpg)         
 **NOTES:** 
 
-1) If DB_SCHEMA_PASSWORD, SUPERVISOR_PASSWORD, WORK_REPO_PASSWORD are not provided in odi.env.list then it will generate random password and use it while running RCU. It will display generated random password on console. If you need to find the passwords at a later time, grep for "password" in the Docker logs generated during the startup of the  container.  To look at the Docker Container logs run:
+1) If DB_SCHEMA_PASSWORD, SUPERVISOR_PASSWORD, WORK_REPO_PASSWORD are not provided in odi.env.list then it will generate random password and use it while running RCU. It will display generated random password on console.
 
-        $ docker logs --details <Container-id>
+2) Studio can be accessed from the same Virtual Machine, if GUI is disabled, you can reenabled it by setting in Vagrantfile 
 
+```
+v.gui = true
+```
 
-2) Studio is required to be used in conjunction with docker image for ODI.
+You can login as vagrant( password vagrant)
 
-3) ODI docker image supports only Oracle Database as the repository database. 
+![https://i.imgur.com/OcwnGdl.jpg](https://i.imgur.com/OcwnGdl.jpg)
+
+Change oracle password:
+
+![https://i.imgur.com/QLV17Hd.jpg](https://i.imgur.com/QLV17Hd.jpg)
+
+login as oracle and then start ODI
+
+![https://i.imgur.com/jArBsD7.jpg](https://i.imgur.com/jArBsD7.jpg)
+
+Setup the connection to repository like this:
+
+![https://i.imgur.com/yZkZER6.jpg](https://i.imgur.com/yZkZER6.jpg)
+
+3) ODI images supports only Oracle Database as the repository database. 
 
 4) For all other supported matrix information, please refer to ODI documentation. The supported database for repository mentioned above supersede the configuration matrix for ODI.
 
@@ -106,13 +123,13 @@ Now you can access the Agent at http://\< host name \>:20910/oraclediagent
 	* Right-click and select View
 	* In the Definition tab, for the field “Maximum number of sessions”, overwrite the value again to 5 and click Save button. Then again overwrite the value to 1000 and click Save button.
 
-## License
+## License ( Copy Pasted from official Oracle Github)
 To download and run Oracle Data Integrator 12c Distribution regardless of inside or outside a Docker container, and regardless of the distribution, you must download the binaries from Oracle website and accept the license indicated at that page.
 
 To download and run Oracle JDK regardless of inside or outside a Docker container, you must download the binary from Oracle website and accept the license indicated at that pge.
 
 All scripts and files hosted in this project and GitHub [docker-images/OracleDataIntegrator](./) repository required to build the Docker images are, unless otherwise noted, released under the Universal Permissive License v1.0.
 
-## Copyright
+## Copyright ( Copy Pasted from official Oracle Github)
 Copyright (c) 2017, Oracle and/or its affiliates. All rights reserved.
 
